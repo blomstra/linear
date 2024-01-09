@@ -1,0 +1,34 @@
+{
+    "name": "blomstra/linear",
+    "type": "library",
+    "description": "An API client for Linear",
+    "keywords": [
+        "APIs",
+        "SDK",
+        "Linear"
+    ],
+    "homepage": "https://blomstra.net",
+    "license": "MIT",
+    "config": {
+        "sort-packages": true
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^7.8",
+        "illuminate/http": "^10.39",
+        "monolog/monolog": "^3.5",
+        "cuyz/valinor": "^1.8",
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "autoload": {
+        "psr-4": {
+            "Linear\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Linear\\Tests\\": "tests/"
+        }
+    }
+}
