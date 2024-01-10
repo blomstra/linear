@@ -8,7 +8,7 @@ final class Project
         readonly ?string $id,
         readonly string $name,
         readonly string $description,
-        readonly Issues $issues,
+        readonly ?Issues $issues,
     ) {}
 
 }

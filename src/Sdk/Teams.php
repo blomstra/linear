@@ -24,6 +24,11 @@ class Teams extends Client
                       id
                       title
                       description
+                      project {
+                        id
+                        name
+                        description
+                      }
                     }
                   }
                 }
@@ -53,6 +58,11 @@ class Teams extends Client
                     id
                     title
                     description
+                    project {
+                      id
+                      name
+                      description
+                    }
                   }
                 }
               }

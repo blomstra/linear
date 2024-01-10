@@ -24,6 +24,10 @@ class TeamsTest extends TestCase
     {
         $response = $this->t->getAll();
         $this->assertInstanceOf(Dto\Teams::class, $response);
+        $this->assertObjectHasProperty('nodes', $response);
+        $this->assertNotEmpty($response->nodes);
+        $this->assertInstanceOf(Dto\Team::class, $response->nodes[0]);
+        $this->assertObjectHasProperty('id', $response->nodes[0]);
     }
 
     public function testGetOne()

@@ -71,9 +71,7 @@ class Issues extends Client
     {
         $query = "
             mutation DeleteIssue {
-              issueDelete(input: {
-                id: \"{$issue->id}\"
-              }) {
+              issueDelete(id: \"{$issue->id}\") {
                 success
               }
             }
@@ -85,15 +83,20 @@ class Issues extends Client
         return $issueArr['issueDelete']['success'];
     }
 
-    public function create(string $title, string $description, Dto\Team $team, ?Dto\Project $project): Dto\Issue
+    public function create(string $title, string $description, Dto\Team $team, ?Dto\Project $project = null): Dto\Issue
     {
+        if (is_null($project)) {
+            $projectQL = 'projectId: null';
+        } else {
+            $projectQL = "projectId: \"{$project->id}\"";
+        }
         $query = "
-            mutation CreateIssue {
+            mutation IssueCreate {
               issueCreate(input: {
                 title: \"$title\",
                 description: \"$description\",
-                teamId: \"{$team->id}\",
-                projectId: \"{$project->id}\"
+                teamId: \"{$team->id}\"
+                $projectQL
               }) {
                 issue {
                   id
@@ -121,13 +124,19 @@ class Issues extends Client
 
     public function update(Dto\Issue $issue): Dto\Issue
     {
+        if (!isset($issue->project->id)) {
+            $projectQL = 'projectId: null';
+        } else {
+            $projectQL = "projectId: \"{$issue->project->id}\"";
+        }
         $query = "
-            mutation UpdateIssue {
-              issueUpdate(input: {
+            mutation IssueUpdate {
+              issueUpdate(
                 id: \"{$issue->id}\",
-                title: \"{$issue->title}\",
-                description: \"{$issue->description}\"
-                projectId: \"{$issue->project->id}\"
+                input: {
+                    title: \"{$issue->title}\",
+                    description: \"{$issue->description}\"
+                    $projectQL
               }) {
                 issue {
                   id
