@@ -85,9 +85,9 @@ $projects = $p->getAll();
 // $projects is now an instance of Linear\Dto\Projects
 ```
 
-#### Issues
+### Issues
 
-### Retrieve an Issue
+#### Retrieve an Issue
 
 A single issue can be retrieved by ID:
 
@@ -109,7 +109,7 @@ $issues = $i->getAll();
 // $issues is now an instance of Linear\Dto\Issues
 ```
 
-### Create an Issue
+#### Create an Issue
 
 ```php
 use Linear\Sdk\Issues;
@@ -128,7 +128,7 @@ $createdIssue = $i->create($title, $description, $team);
 // $createdIssue is now an instance of Linear\Dto\Issue
 ```
 
-### Update an Issue
+#### Update an Issue
 
 ```php
 use Linear\Sdk\Issues;
@@ -143,7 +143,7 @@ $updatedIssue = $i->update($updatedIssue);
 // $updatedIssue is now an instance of Linear\Dto\Issue
 ```
 
-### Delete an Issue
+#### Delete an Issue
 
 ```php
 use Linear\Sdk\Issues;
