@@ -14,7 +14,12 @@ class Client
     {
         $client = new Factory();
         $this->http = $client->baseUrl('https://api.linear.app/graphql')
-            ->withHeader('Authorization', $token);
+            ->withHeaders(
+                [
+                    'Authorization' => $token
+                ]
+            );
+            //->withHeader('Authorization', $token); Only works with illuminate/http > 10 and Flarum needs 8
     }
 
     public function process(Response $response): mixed
