@@ -8,6 +8,9 @@ final class Issue
         readonly ?string $id,
         readonly string $title,
         readonly string $description,
+        readonly int $priority,
+        readonly string $priorityLabel,
+        readonly ?State $state,
         readonly ?Project $project,
     ) {}
 

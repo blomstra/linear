@@ -25,7 +25,13 @@ class Projects extends Client
                       id
                       title
                       description
-                    
+                      priority
+                      priorityLabel
+                      state {
+                        id
+                        name
+                        type
+                      }
                     }
                   }
                 }
@@ -56,7 +62,13 @@ class Projects extends Client
                     id
                     title
                     description
-            
+                    priority
+                    priorityLabel
+                    state {
+                      id
+                      name
+                      type
+                    }
                   }
                 }
               }

@@ -19,11 +19,25 @@ class Teams extends Client
                  nodes {
                   id
                   name
+                  states {
+                    nodes {
+                      id
+                      name
+                      type
+                    }
+                  }
                   issues {
                     nodes {
                       id
                       title
                       description
+                      priority
+                      priorityLabel
+                      state {
+                        id
+                        name
+                        type
+                      }
                       project {
                         id
                         name
@@ -53,11 +67,25 @@ class Teams extends Client
               team(id: \"$id\" ) {
                 id
                 name
+                states {
+                  nodes {
+                    id
+                    name
+                    type
+                  }
+                }
                 issues {
                   nodes {
                     id
                     title
                     description
+                    priority
+                    priorityLabel
+                    state {
+                      id
+                      name
+                      type
+                    }
                     project {
                       id
                       name
