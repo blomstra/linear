@@ -30,7 +30,10 @@ class Teams extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
+
+        $response = $this->cache->get('teams', function () use ($query) {
+            return $this->http->post('/', ['query' => $query]);
+        });
 
         $teamsArr = $this->process($response);
 
@@ -77,7 +80,10 @@ class Teams extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
+
+        $response = $this->cache->get('team_' . $id, function () use ($query) {
+            return $this->http->post('/', ['query' => $query]);
+        });
 
         $teamsArr = $this->process($response);
 
