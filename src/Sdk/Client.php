@@ -5,17 +5,14 @@ namespace Linear\Sdk;
 use Illuminate\Http\Client\Factory;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
-use Symfony\Component\Cache\Adapter\FilesystemAdapter;
 use Exception;
 
 class Client
 {
     protected PendingRequest $http;
-    protected FilesystemAdapter $cache;
-    public function __construct(string $token, int $cacheTTlInSeconds = 0)
+    public function __construct(string $token)
     {
         $client = new Factory();
-        $this->cache = new FilesystemAdapter('blomstra_linear', $cacheTTlInSeconds);
         $this->http = $client->baseUrl('https://api.linear.app/graphql')
             ->withHeaders(
                 [
