@@ -26,25 +26,6 @@ class Teams extends Client
                       type
                     }
                   }
-                  issues {
-                    nodes {
-                      id
-                      title
-                      description
-                      priority
-                      priorityLabel
-                      state {
-                        id
-                        name
-                        type
-                      }
-                      project {
-                        id
-                        name
-                        description
-                      }
-                    }
-                  }
                 }
               }
             }
