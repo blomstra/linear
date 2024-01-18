@@ -7,6 +7,7 @@ use CuyZ\Valinor\Mapper\Source\Source;
 use Linear\Utils\Mapper;
 use Linear\Dto;
 use Exception;
+use Symfony\Contracts\Cache\ItemInterface;
 
 
 class Teams extends Client
@@ -30,9 +31,11 @@ class Teams extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $teamsArr = $this->process($response);
+        $teamsArr = $this->cache->get('teams', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Teams::class, Source::array($teamsArr['teams']));
@@ -77,9 +80,11 @@ class Teams extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $teamsArr = $this->process($response);
+        $teamsArr = $this->cache->get('teams', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Team::class, Source::array($teamsArr['team']));
