@@ -15,7 +15,7 @@ class Client
     public function __construct(string $token, int $cacheTtl = 0, string $cachePath = null)
     {
         $client = new Factory();
-        $this->cache = new FilesystemAdapter('blomstra_linear', 0, $cachePath);
+        $this->cache = new FilesystemAdapter('blomstra_linear', $cacheTtl, $cachePath);
         $this->http = $client->baseUrl('https://api.linear.app/graphql')
             ->withHeaders(
                 [
