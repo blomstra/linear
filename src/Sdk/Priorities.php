@@ -21,9 +21,12 @@ class Priorities extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $prioritiesArr = $this->process($response);
+        $prioritiesArr = $this->cache->get('priorities', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
+
 
         try {
             return Mapper::get()->map(Dto\Priorities::class, Source::array($prioritiesArr));

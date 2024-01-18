@@ -36,9 +36,11 @@ class Issues extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $issuesArr = $this->process($response);
+        $issuesArr = $this->cache->get('issues', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Issues::class, Source::array($issuesArr['issues']));
@@ -70,9 +72,11 @@ class Issues extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $issueArr = $this->process($response);
+        $issueArr = $this->cache->get('issue', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Issue::class, Source::array($issueArr['issue']));

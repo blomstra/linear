@@ -22,9 +22,11 @@ class Organization extends Client
                 }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $organisationArr = $this->process($response);
+        $organisationArr = $this->cache->get('organization', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Organization::class, Source::array($organisationArr['organization']));

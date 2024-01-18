@@ -38,9 +38,11 @@ class Projects extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $projectsArr = $this->process($response);
+        $projectsArr = $this->cache->get('projects', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Projects::class, Source::array($projectsArr['projects']));
@@ -74,9 +76,11 @@ class Projects extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
 
-        $projectsArr = $this->process($response);
+        $projectsArr = $this->cache->get('project', function (ItemInterface $item) use ($query) {
+            $response = $this->http->post('/', ['query' => $query]);
+            return $this->process($response);
+        });
 
         try {
             return Mapper::get()->map(Dto\Project::class, Source::array($projectsArr['project']));
