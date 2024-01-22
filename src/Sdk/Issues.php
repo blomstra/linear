@@ -58,6 +58,7 @@ class Issues extends Client
                 id
                 title
                 description
+                number
                 priority
                 priorityLabel
                 state {
@@ -121,6 +122,7 @@ class Issues extends Client
                   id
                   title
                   description
+                  number
                   priority
                   priorityLabel
                   state {
@@ -168,6 +170,7 @@ class Issues extends Client
                   id
                   title
                   description
+                  number
                   priority
                   priorityLabel
                   state {

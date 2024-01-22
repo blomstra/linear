@@ -80,6 +80,7 @@ class Teams extends Client
                     id
                     title
                     description
+                    number
                     priority
                     priorityLabel
                     state {

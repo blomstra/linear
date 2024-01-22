@@ -26,6 +26,7 @@ class Projects extends Client
                       id
                       title
                       description
+                      number
                       priority
                       priorityLabel
                       state {
@@ -65,6 +66,7 @@ class Projects extends Client
                     id
                     title
                     description
+                    number
                     priority
                     priorityLabel
                     state {
