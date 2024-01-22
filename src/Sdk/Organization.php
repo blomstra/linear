@@ -5,6 +5,7 @@ namespace Linear\Sdk;
 use CuyZ\Valinor\Mapper\MappingError;
 use CuyZ\Valinor\Mapper\Source\Source;
 use Linear\Utils\Mapper;
+use Symfony\Contracts\Cache\ItemInterface;
 use Linear\Dto;
 use Exception;
 
