@@ -50,7 +50,7 @@ class Teams extends Client
         }
     }
 
-    public function getOne(string $id): Dto\Team
+    public function getOne(string $id, $includeIssues = false, $includeStates = false): Dto\Team
     {
         $query = "
             query Team {
@@ -62,14 +62,19 @@ class Teams extends Client
                   id
                   name
                   urlKey
-                }
+                }";
+        if ($includeStates) {
+            $query .= "
                 states {
                   nodes {
                     id
                     name
                     type
                   }
-                }
+                }";
+        }
+        if ($includeIssues) {
+            $query .="
                 issues {
                   nodes {
                     id
@@ -88,12 +93,14 @@ class Teams extends Client
                       description
                     }
                   }
-                }
+                }";
               }
-            }
+        $query .= "
+              }
+              }
         ";
 
-        $teamsArr = $this->cache->get('teams', function (ItemInterface $item) use ($query) {
+        $teamsArr = $this->cache->get('team_' . $id, function (ItemInterface $item) use ($query) {
             $response = $this->http->post('/', ['query' => $query]);
             return $this->process($response);
         });

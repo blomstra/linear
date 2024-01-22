@@ -74,7 +74,7 @@ class Issues extends Client
             }
         ";
 
-        $issueArr = $this->cache->get('issue', function (ItemInterface $item) use ($query) {
+        $issueArr = $this->cache->get('issue_' . $id, function (ItemInterface $item) use ($query) {
             $response = $this->http->post('/', ['query' => $query]);
             return $this->process($response);
         });
