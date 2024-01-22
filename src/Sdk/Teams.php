@@ -20,6 +20,12 @@ class Teams extends Client
                  nodes {
                   id
                   name
+                  key
+                  organization {
+                    id
+                    name
+                    urlKey
+                  }
                   states {
                     nodes {
                       id
@@ -51,6 +57,12 @@ class Teams extends Client
               team(id: \"$id\" ) {
                 id
                 name
+                key
+                organization {
+                  id
+                  name
+                  urlKey
+                }
                 states {
                   nodes {
                     id
