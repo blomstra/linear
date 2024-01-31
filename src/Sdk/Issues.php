@@ -104,12 +104,13 @@ class Issues extends Client
         return $issueArr['issueDelete']['success'];
     }
 
-    public function create(string $title, string $description, Dto\Team $team, ?Dto\Project $project = null): Dto\Issue
+    public function create(string $title, string $description, Dto\Team $team, ?int $priority = 0, ?Dto\Project $project = null): Dto\Issue
     {
         $input = [
             'title' => $title,
             'description' => $description,
             'teamId' => $team->id,
+            'priority' => $priority,
             'projectId' => $issue->project->id ?? null,
         ];
 
@@ -157,6 +158,7 @@ class Issues extends Client
             'title' => $issue->title,
             'description' => $issue->description,
             'projectId' => $issue->project->id ?? null,
+            'priority' => $issue->priority,
         ];
 
         $query = "

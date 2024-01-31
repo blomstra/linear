@@ -37,7 +37,7 @@ class IssuesTest extends TestCase
     public function testLifecycle()
     {
         $team = $this->teams->getAll()->nodes[0];
-        $issue = $this->issues->create('Test issue', 'Test issue description', $team);
+        $issue = $this->issues->create('Test issue', 'Test issue description', $team, 1);
         $this->assertInstanceOf(Dto\Issue::class, $issue);
         $this->assertEquals('Test issue', $issue->title);
         $this->assertEquals('Test issue description', $issue->description);
