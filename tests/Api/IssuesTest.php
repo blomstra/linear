@@ -12,7 +12,7 @@ class IssuesTest extends TestCase
     protected ?Sdk\Teams $teams;
     public function setUp(): void
     {
-        $this->issues = new Sdk\Issues(getenv('LINEAR_API_KEY'));
+        $this->issues = new Sdk\Issues(getenv('LINEAR_API_KEY'), 1);
         $this->teams = new Sdk\Teams(getenv('LINEAR_API_KEY'));
     }
 
@@ -43,7 +43,8 @@ class IssuesTest extends TestCase
         $this->assertEquals('Test issue description', $issue->description);
 
 
-        $issueRemote = new Dto\Issue($issue->id, $issue->title . ' updated', $issue->description . ' updated', $issue->project);
+        $issueRemote = new Dto\Issue($issue->id, $issue->title . ' updated', $issue->description . ' updated',
+            $issue->number, $issue->priority, $issue->priorityLabel, $issue->state, $issue->project);
 
         $this->issues->update($issueRemote);
         $this->assertEquals('Test issue updated', $issueRemote->title);

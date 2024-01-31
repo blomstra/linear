@@ -21,6 +21,7 @@ class Issues extends Client
                   id
                   title
                   description
+                  number
                   priority
                   priorityLabel
                   state {
@@ -105,19 +106,16 @@ class Issues extends Client
 
     public function create(string $title, string $description, Dto\Team $team, ?Dto\Project $project = null): Dto\Issue
     {
-        if (is_null($project)) {
-            $projectQL = 'projectId: null';
-        } else {
-            $projectQL = "projectId: \"{$project->id}\"";
-        }
+        $input = [
+            'title' => $title,
+            'description' => $description,
+            'teamId' => $team->id,
+            'projectId' => $issue->project->id ?? null,
+        ];
+
         $query = "
-            mutation IssueCreate {
-              issueCreate(input: {
-                title: \"$title\",
-                description: \"$description\",
-                teamId: \"{$team->id}\"
-                $projectQL
-              }) {
+            mutation (\$input: IssueCreateInput!) {
+              issueCreate(input: \$input) {
                 issue {
                   id
                   title
@@ -139,7 +137,10 @@ class Issues extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
+
+        $qx = ['query' => $query, 'variables' => ['input' => $input]];
+
+        $response = $this->http->post('/', $qx);
 
         $issueArr = $this->process($response);
 
@@ -152,20 +153,17 @@ class Issues extends Client
 
     public function update(Dto\Issue $issue): Dto\Issue
     {
-        if (!isset($issue->project->id)) {
-            $projectQL = 'projectId: null';
-        } else {
-            $projectQL = "projectId: \"{$issue->project->id}\"";
-        }
+        $input = [
+            'title' => $issue->title,
+            'description' => $issue->description,
+            'projectId' => $issue->project->id ?? null,
+        ];
+
         $query = "
-            mutation IssueUpdate {
+            mutation (\$input: IssueUpdateInput!) {
               issueUpdate(
                 id: \"{$issue->id}\",
-                input: {
-                    title: \"{$issue->title}\",
-                    description: \"{$issue->description}\"
-                    $projectQL
-              }) {
+                input: \$input) {
                 issue {
                   id
                   title
@@ -187,7 +185,9 @@ class Issues extends Client
               }
             }
         ";
-        $response = $this->http->post('/', ['query' => $query]);
+        $qx = ['query' => $query, 'variables' => ['input' => $input]];
+
+        $response = $this->http->post('/', $qx);
 
         $issueArr = $this->process($response);
 
