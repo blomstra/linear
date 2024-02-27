@@ -104,7 +104,7 @@ class Issues extends Client
         return $issueArr['issueDelete']['success'];
     }
 
-    public function create(string $title, string $description, Dto\Team $team, ?int $priority = 0, ?Dto\Project $project = null): Dto\Issue
+    public function create(string $title, string $description, Dto\Team $team, ?int $priority = 0, ?Dto\Project $project = null, array $labels = []): Dto\Issue
     {
         $input = [
             'title' => $title,
@@ -112,6 +112,7 @@ class Issues extends Client
             'teamId' => $team->id,
             'priority' => $priority,
             'projectId' => $issue->project->id ?? null,
+            'labelIds' => $labels ?? [],
         ];
 
         $query = "
@@ -124,6 +125,7 @@ class Issues extends Client
                   number
                   priority
                   priorityLabel
+                  labelIds
                   state {
                     id
                     name
@@ -144,6 +146,8 @@ class Issues extends Client
         $response = $this->http->post('/', $qx);
 
         $issueArr = $this->process($response);
+
+        unset($issueArr['issueCreate']['issue']['labelIds']);
 
         try {
             return Mapper::get()->map(Dto\Issue::class, Source::array($issueArr['issueCreate']['issue']));
